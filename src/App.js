@@ -35,7 +35,7 @@ function App() {
           <Route path="/northern/" element={<Northern />} />
           <Route path="/new-felucia/" element={<NewFelucia />} />
           <Route path="/naboo/" element={<Naboo />} />
-          <Route path="/commision/" element={<Commision />} />
+          <Route path="/commision" element={<Commision />} />
         </Routes>
       </Router>
       <Footer></Footer>

@@ -1,10 +1,30 @@
 import { signOut } from "firebase/auth";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import auth from "../firebase.init";
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import axios from "axios";
 
 const Navbar = () => {
+  const [user] = useAuthState(auth);
+  const [userData, setUserData] = useState();
+  useEffect(() => {
+    const fetchUserInformation = async () => {
+      try {
+        console.log("Fetching user information...");
+        const response = await axios.get(
+          `http://localhost:5001/api/v1/user/peruser?voterid=${user?.email}`
+        );
+        console.log("Response from the server:", response?.data);
+
+        setUserData(response?.data);
+      } catch (error) {
+        console.error("Error fetching user information:", error);
+      }
+    };
+
+    fetchUserInformation();
+  }, [user]);
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -13,7 +33,14 @@ const Navbar = () => {
       console.error("Error signing out:", error.message);
     }
   };
-  const [user] = useAuthState(auth);
+  const constituencies = [
+    "Shangri-La Town",
+    "Northern Kunlun Mountain",
+    "Western Shangri-La",
+    "Naboo Valley",
+    "New Felucia",
+  ];
+
   return (
     <div>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -44,6 +71,24 @@ const Navbar = () => {
                   Features
                 </a>
               </li>
+              {userData?.userType == "user" ? (
+                <>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/commision">
+                      {userData.constituency}
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <li class="nav-item">
+                    <a class="nav-link" href="/commision">
+                      commision
+                    </a>
+                  </li>
+                </>
+              )}
               {user ? (
                 <li class="nav-item" onClick={handleSignOut}>
                   log out
