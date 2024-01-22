@@ -13,6 +13,7 @@ import Naboo from "./component/Pages/Naboo";
 import Commision from "./component/Pages/Commision";
 import Register from "./component/Pages/Register";
 import Login from "./component/Pages/Login";
+import RequireAuth from "./component/hooks/RequireAuth";
 function App() {
   return (
     <div>
@@ -28,14 +29,57 @@ function App() {
       />
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <HomePage />
+              </RequireAuth>
+            }
+          />
           <Route path="/register/" element={<Register />} />
           <Route path="/login/" element={<Login />} />
-          <Route path="/western/" element={<Western />} />
-          <Route path="/northern/" element={<Northern />} />
-          <Route path="/new-felucia/" element={<NewFelucia />} />
-          <Route path="/naboo/" element={<Naboo />} />
-          <Route path="/commision" element={<Commision />} />
+          <Route
+            path="/western/"
+            element={
+              <RequireAuth>
+                <Western />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/northern/"
+            element={
+              <RequireAuth>
+                <Northern />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/new-felucia/"
+            element={
+              <RequireAuth>
+                <NewFelucia />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/naboo/"
+            element={
+              <RequireAuth>
+                {" "}
+                <Naboo />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/commision"
+            element={
+              <RequireAuth>
+                <Commision />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </Router>
       <Footer></Footer>

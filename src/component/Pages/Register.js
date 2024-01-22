@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import axios from "axios";
+import { toast } from "react-toastify";
 const RegistrationForm = () => {
   const {
     register,
@@ -22,7 +23,59 @@ const RegistrationForm = () => {
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
   const [user] = useAuthState(auth);
-  const handleSignup = async () => {};
+  const codesArray = [
+    "HH64FWPE",
+    "BBMNS9ZJ",
+    "KYMK9PUH",
+    "WL3K3YPT",
+    "JA9WCMAS",
+    "Z93G7PN9",
+    "WPC5GEHA",
+    "RXLNLTA6",
+    "7XUFD78Y",
+    "DBP4GQBQ",
+    "ZSRBTK9S",
+    "B7DMPWCQ",
+    "YADA47RL",
+    "9GTZQNKB",
+    "KSM9NB5L",
+    "BQCRWTSG",
+    "ML5NSKKG",
+    "D5BG6FDH",
+    "2LJFM6PM",
+    "38NWLPY3",
+    "2TEHRTHJ",
+    "G994LD9T",
+    "Q452KVQE",
+    "75NKUXAH",
+    "DHKVCU8T",
+    "TH9A6HUB",
+    "2E5BHT5R",
+    "556JTA32",
+    "LUFKZAHW",
+    "DBAD57ZR",
+    "K96JNSXY",
+    "PFXB8QXM",
+    "8TEXF2HD",
+    "N6HBFD2X",
+    "K3EVS3NM",
+    "5492AC6V",
+    "U5LGC65X",
+    "BKMKJN5S",
+    "JF2QD3UF",
+    "NW9ETHS7",
+    "VFBH8W6W",
+    "7983XU4M",
+    "2GYDT5D3",
+    "LVTFN8G5",
+    "UNP4A5T7",
+    "UMT3RLVS",
+    "TZZZCJV8",
+    "UVE5M7FR",
+    "W44QP7XJ",
+    "9FCV9RMT",
+  ];
+
   if (user) {
     navigate(from);
   }
@@ -34,24 +87,25 @@ const RegistrationForm = () => {
     try {
       // Perform additional checks for password and confirm password
 
-      console.log("fg");
-      try {
-        const createUser = await createUserWithEmailAndPassword(
-          data.voterid,
-          data.password
-        );
-        if (createUser) {
-          const response = await axios.post(
-            "http://localhost:5001/api/v1/user/register",
-            {
-              data,
-            }
+      if (codesArray.includes(data.uvc)) {
+        try {
+          const createUser = await createUserWithEmailAndPassword(
+            data.voterid,
+            data.password
           );
-          console.log(response.data);
+          if (createUser) {
+            const response = await axios.post(
+              "http://localhost:5001/api/v1/user/register",
+              {
+                data,
+              }
+            );
+            console.log(response.data);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } else toast("please add correct uvc");
 
       // Handle success or redirect to dashboard
     } catch (error) {

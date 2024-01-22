@@ -1,7 +1,19 @@
 import React from "react";
 
 const Footer = () => {
-  return <div className="bg-black px-5">Vote Site</div>;
+  return (
+    <div
+      className="bg-black "
+      style={{
+        padding: "15px",
+        textAlign: "center",
+        color: "white",
+        marginTop: "20px",
+      }}
+    >
+      Vote Site
+    </div>
+  );
 };
 
 export default Footer;
