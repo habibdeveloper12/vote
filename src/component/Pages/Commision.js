@@ -70,18 +70,18 @@ const Commision = () => {
               <tr>
                 <td id="constituency1">Shangri-La Town</td>
                 <td>Party B</td>
-                <td id="resultPartyB1">{userData.length}</td>
+                <td id="resultPartyB1">{userData?.length}</td>
               </tr>
 
               <tr>
                 <td id="constituency2">Northern Kunlun Mountain</td>
                 <td>Party A</td>
-                <td id="resultPartyA2">{userData.length}</td>
+                <td id="resultPartyA2">{userData?.length}</td>
               </tr>
               <tr>
                 <td id="constituency2">Northern Kunlun Mountain</td>
                 <td>Party B</td>
-                <td id="resultPartyB2">{userData.length}</td>
+                <td id="resultPartyB2">{userData?.length}</td>
               </tr>
             </tbody>
           </table>
