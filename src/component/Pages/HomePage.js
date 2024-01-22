@@ -1,19 +1,37 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 import auth from "../../firebase.init";
-import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const [selectedMP, setSelectedMP] = useState(""); // State to hold the selected MP
-  const navigate = useNavigate();
+  const [selectedMP, setSelectedMP] = useState("");
+  const [user] = useAuthState(auth);
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    const fetchUserInformation = async () => {
+      try {
+        console.log("Fetching user information...");
+        const response = await axios.get(
+          `http://localhost:5001/api/v1/user/peruser?voterid=${user?.email}`
+        );
+        console.log("Response from the server:", response);
+        setUserData(response?.data);
+      } catch (error) {
+        console.error("Error fetching user information:", error);
+      }
+    };
+    fetchUserInformation();
+  }, [user]); // State to hold the selected MP
+
   const handleVoteChange = (event) => {
     setSelectedMP(event.target.value);
   };
-  const [user] = useAuthState(auth);
-  if (!user) {
-    navigate("/");
-  }
+
+  // if (!user) {
+  //   navigate("/");
+  // }
+
   const handleVoteSubmission = async () => {
     // Perform actions for submitting the vote, e.g., send data to the backend
     console.log("Selected MP:", selectedMP);
@@ -38,7 +56,7 @@ const HomePage = () => {
   return (
     <div>
       <div className="container mt-5">
-        <h2>Shangri-la Town</h2>
+        <h2> {userData?.constituency}</h2>
 
         <div className="form-group">
           <label htmlFor="voteConstituency">Select MP to Vote:</label>
